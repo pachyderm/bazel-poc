@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go-echo_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/pachyderm/bazel-poc/go/cmd/go-echo",
+    visibility = ["//visibility:private"],
+    deps = ["@com_github_jrockway_opinionated_server//server"],
+)
+
+go_binary(
+    name = "go-echo",
+    embed = [":go-echo_lib"],
+    visibility = ["//visibility:public"],
+)

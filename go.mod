@@ -1,6 +1,8 @@
-module github.com/pachyderm/bazel-poc/go
+module github.com/pachyderm/bazel-poc
 
 go 1.18
+
+require github.com/jrockway/opinionated-server v0.0.22
 
 require (
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -11,7 +13,6 @@ require (
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0 // indirect
 	github.com/grpc-ecosystem/grpc-opentracing v0.0.0-20180507213350-8e809c8a8645 // indirect
 	github.com/jessevdk/go-flags v1.5.0 // indirect
-	github.com/jrockway/opinionated-server v0.0.22 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/opentracing-contrib/go-stdlib v1.0.0 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
