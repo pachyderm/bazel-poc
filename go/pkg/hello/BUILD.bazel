@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "hello",
+    srcs = [
+        "hello.go",
+        "hello_cgo.go",
+    ],
+    importpath = "github.com/pachyderm/bazel-poc/go/pkg/hello",
+    visibility = ["//visibility:public"],
+    deps = ["//protos"],
+)
+
+go_test(
+    name = "hello_test",
+    srcs = ["hello_test.go"],
+    embed = [":hello"],
+    deps = [
+        "//protos",
+        "@com_github_google_go_cmp//cmp",
+        "@org_golang_google_protobuf//testing/protocmp",
+    ],
+)

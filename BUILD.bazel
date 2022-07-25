@@ -12,3 +12,7 @@ gazelle(
     ],
     command = "update-repos",
 )
+
+load("//:platforms.bzl", "register_platforms")
+
+register_platforms()

@@ -5,11 +5,17 @@ go_library(
     srcs = ["main.go"],
     importpath = "github.com/pachyderm/bazel-poc/go/cmd/go-echo",
     visibility = ["//visibility:private"],
-    deps = ["@com_github_jrockway_opinionated_server//server"],
+    deps = [
+        "//protos",
+        "@com_github_jrockway_opinionated_server//server",
+        "@org_golang_google_grpc//:go_default_library",
+    ],
 )
 
 go_binary(
     name = "go-echo",
     embed = [":go-echo_lib"],
+    pure = "on",
+    static = "on",
     visibility = ["//visibility:public"],
 )
