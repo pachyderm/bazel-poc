@@ -108,18 +108,12 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 # gazelle:repository_macro deps.bzl%go_dependencies
 go_dependencies()
 
-# https://github.com/bazelbuild/bazel-gazelle/issues/1217
-go_repository(
-    name = "org_golang_x_mod",
-    build_external = "external",
-    importpath = "golang.org/x/mod",
-    sum = "h1:Gz96sIWK3OalVv/I/qNygP42zyoKp3xptRVCWRFEBvo=",
-    version = "v0.4.2",
-)
-
 go_rules_dependencies()
 
-go_register_toolchains(version = "1.18.4")
+go_register_toolchains(
+    nogo = "@//:govet",
+    version = "1.18.4",
+)
 
 gazelle_dependencies()
 

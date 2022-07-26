@@ -1,3 +1,5 @@
+# Gazelle
+
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix github.com/pachyderm/bazel-poc
@@ -13,6 +15,18 @@ gazelle(
     command = "update-repos",
 )
 
+# Cross-compiling
+
 load("//:platforms.bzl", "register_platforms")
 
 register_platforms()
+
+# Go lint
+
+load("@io_bazel_rules_go//go:def.bzl", "nogo")
+
+nogo(
+    name = "govet",
+    vet = True,
+    visibility = ["//visibility:public"],
+)

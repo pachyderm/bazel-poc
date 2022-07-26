@@ -6,11 +6,11 @@ commit to tackling that complexity.
 
 Today we have:
 
--   Go (server, tests, and force-disabling cgo like pachyderm/pachyderm does)
+-   Go (server, tests, force-disabling cgo like pachyderm/pachyderm does, nogo lint)
 
 To add:
 
--   Go linting (nogo)
+-   Go linting (checks from golangci-lint)
 -   Helm (releases)
 -   Jsonnet (lint, tests)
 -   Python (PyPI releases, lint, tests)
