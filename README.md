@@ -43,15 +43,18 @@ generated files (like protobufs) as though they were actually checked in, even t
 ## Run the tests
 
 ```shell
-bazel test //...
+bazel test ...
 ```
 
 Output goes to a file by default. That's useful when testing everything, but not so helpful when
 you're debugging a single test. Run this instead:
 
 ```shell
-bazel test --test_output=all //...
+bazel test --test_output=all ...
 ```
+
+You can add a `test --test_output=errors` or `test --test_output=all` line to a `.bazelrc.local`
+file in this directory if you find yourself always running the tests like this.
 
 ## Run the Go server
 
