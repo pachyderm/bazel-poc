@@ -1,1 +1,3 @@
-build --incompatible_enable_cc_toolchain_resolution --@io_bazel_rules_go//go/config:pure
+build --incompatible_enable_cc_toolchain_resolution --@io_bazel_rules_go//go/config:pure --disk_cache=~/.cache/bazel-poc/bazel-cache
+
+test --disk_cache=~/.cache/bazel-poc/bazel-cache

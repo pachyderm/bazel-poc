@@ -26,12 +26,7 @@ To add:
 
 https://bazel.build/install
 
-You will also want to create `.bazelrc.local` in this directory and set up some cache locations:
-
-```
-build --disk_cache=<your home directory, environment variables ignored>/.cache/bazel-poc/bazel-cache
-test --disk_cache=<your home directory, environment variables ignored>/.cache/bazel-poc/bazel-cache
-```
+You can setup tab completion in your shell after this, see https://bazel.build/install/completion
 
 ## Setup your editor for Bazel
 
