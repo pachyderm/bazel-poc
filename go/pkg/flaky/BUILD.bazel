@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "flaky",
+    srcs = ["flaky.go"],
+    importpath = "github.com/pachyderm/bazel-poc/go/pkg/flaky",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "flaky_test",
+    srcs = ["flaky_test.go"],
+    embed = [":flaky"],
+    flaky = True,
+)
