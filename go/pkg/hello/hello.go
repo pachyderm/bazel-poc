@@ -1,3 +1,4 @@
+// Package hello implements the Hello RPC service.
 package hello
 
 import (

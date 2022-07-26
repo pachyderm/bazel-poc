@@ -1,4 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 BAZEL_TOOLCHAIN_TAG = "0.7.2"
 
@@ -26,7 +27,7 @@ http_archive(
     sha256 = "501deb3d5695ab658e82f6f6f549ba681ea3ca2a5fb7911154b5aa45596183fa",
     urls = [
         "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.26.0/bazel-gazelle-v0.26.0.tar.gz",
-        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.25.0/bazel-gazelle-v0.26.0.tar.gz",
+        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.26.0/bazel-gazelle-v0.26.0.tar.gz",
     ],
 )
 
@@ -111,10 +112,17 @@ go_dependencies()
 go_rules_dependencies()
 
 go_register_toolchains(
-    nogo = "@//:govet",
+    nogo = "@//:go_lint",
     version = "1.18.4",
 )
 
 gazelle_dependencies()
 
 protobuf_deps()
+
+git_repository(
+    name = "com_github_sluongng_nogo_analyzer",
+    commit = "d6a3958307f2b485cda307f453e06db025415177",
+    remote = "https://github.com/sluongng/nogo-analyzer",
+    shallow_since = "1656919128 +0200",
+)

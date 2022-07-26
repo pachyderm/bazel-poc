@@ -24,9 +24,27 @@ register_platforms()
 # Go lint
 
 load("@io_bazel_rules_go//go:def.bzl", "nogo")
+load("@com_github_sluongng_nogo_analyzer//staticcheck:def.bzl", "ANALYZERS", "staticcheck_analyzers")
+load("@com_github_sluongng_nogo_analyzer//:def.bzl", "nogo_config")
+
+nogo_config(
+    name = "nogo_config",
+    out = "nogo_config.json",
+    analyzers = ANALYZERS,
+    default = {
+        "exclude_files": {
+            # Unanchored regexp because of: https://github.com/bazelbuild/rules_go/issues/3250
+            "external/": "out of our control",
+            "bazel-out/": "out of our control",
+            "[.]pb[.]go$": "generated",
+        },
+    },
+)
 
 nogo(
-    name = "govet",
+    name = "go_lint",
+    config = ":nogo_config.json",
     vet = True,
     visibility = ["//visibility:public"],
+    deps = staticcheck_analyzers(ANALYZERS),
 )

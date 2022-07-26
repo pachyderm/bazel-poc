@@ -1,3 +1,7 @@
-build --incompatible_enable_cc_toolchain_resolution --@io_bazel_rules_go//go/config:pure --disk_cache=~/.cache/bazel-poc/bazel-cache
+# try-import .bazelrc.local
+
+build --incompatible_enable_cc_toolchain_resolution
+build --@io_bazel_rules_go//go/config:pure
+build --disk_cache=~/.cache/bazel-poc/bazel-cache
 
 test --disk_cache=~/.cache/bazel-poc/bazel-cache
