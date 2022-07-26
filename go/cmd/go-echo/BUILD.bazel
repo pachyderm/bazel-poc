@@ -19,6 +19,7 @@ go_binary(
     pure = "on",
     static = "on",
     visibility = ["//visibility:public"],
+    x_defs = {"github.com/jrockway/opinionated-server/server.AppVersion": "{STABLE_GIT_COMMIT}"},
 )
 
 go_image(
