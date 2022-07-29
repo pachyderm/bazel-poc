@@ -149,3 +149,12 @@ Then deploy: `bazel run local.create`.
 
 After you make a change: `bazel run local.replace`. You can see what `replace` is going to do with
 `bazel run local.diff`.
+
+## Run Python
+
+```shell
+bazel run //py/hello
+```
+
+Note that you need Python 3 installed, but only to do some housekeeping; the actual script runs with
+the Python version declared in WORKSPACE: https://github.com/bazelbuild/rules_python/issues/691
