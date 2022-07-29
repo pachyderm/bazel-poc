@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: go-echo
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: go-echo
+    template:
+        metadata:
+            labels:
+                app: go-echo
+        spec:
+            containers:
+                - name: go-echo
+                  image: go-echo:latest
+                  imagePullPolicy: Always
+                  ports:
+                      - containerPort: 8080
+                      - containerPort: 8081
+                      - containerPort: 9090

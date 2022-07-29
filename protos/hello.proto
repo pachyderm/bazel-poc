@@ -2,7 +2,10 @@ syntax = "proto3";
 package hello;
 
 service Hello {
+    // Echo echos back the text of your request.
     rpc Echo(EchoRequest) returns (EchoReply) {};
+    // MOTD returns the message of the day.
+    rpc MOTD(MOTDRequest) returns (MOTDReply) {};
 }
 
 message EchoRequest {
@@ -11,4 +14,10 @@ message EchoRequest {
 
 message EchoReply {
     string text = 1;
+}
+
+message MOTDRequest {}
+
+message MOTDReply {
+    string msg = 1;
 }

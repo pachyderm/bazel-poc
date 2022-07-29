@@ -19,6 +19,7 @@ To add:
 -   Kubernetes helpers (build containers, setup minikube, deploy helm chart, upgrade helm chart
     after rebuild, etc.)
 -   CI configuration (bazel test ... in circle)
+-   Darwin/Arm64 cc toolcahin
 
 # How to
 
@@ -120,3 +121,31 @@ In the future we will probably use a Docker rule to pull Debian stable or someth
 
 It would also be nice to somehow run cross-compiled code in an emulator for a basic sanity check.
 Probably quite possible. I don't know how to do it.
+
+## Deploy the current state of the workspace to a live k8s environment
+
+Create a KinD cluster:
+
+```shell
+reg_name='kind-registry'
+reg_port='5001'
+if [ "$(docker inspect -f '{{.State.Running}}' "${reg_name}" 2>/dev/null || true)" != 'true' ]; then
+  docker run \
+    -d --restart=always -p "127.0.0.1:${reg_port}:5000" --name "${reg_name}" \
+    registry:2
+fi
+
+cat <<EOF | kind create cluster --name=kind --config=-
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+containerdConfigPatches:
+- |-
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:${reg_port}"]
+    endpoint = ["http://${reg_name}:5000"]
+EOF
+```
+
+Then deploy: `bazel run local.create`.
+
+After you make a change: `bazel run local.replace`. You can see what `replace` is going to do with
+`bazel run local.diff`.
