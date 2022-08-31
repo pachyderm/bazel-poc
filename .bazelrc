@@ -8,7 +8,7 @@ build --bes_results_url=https://app.buildbuddy.io/invocation/
 build --bes_backend=grpcs://remote.buildbuddy.io
 build --remote_cache=grpcs://remote.buildbuddy.io
 build --remote_timeout=3600
-build --experimental_remote_cache_compression --experimental_remote_cache_async
+build --experimental_remote_cache_compression --experimental_remote_cache_async --remote_download_toplevel
 build --workspace_status_command=$(pwd)/tools/workspace_status.sh
 
 ## If you have an API key for buildbuddy, add it to ~/.bazelrc, or .bazelrc.local:
