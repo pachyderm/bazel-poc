@@ -1,0 +1,18 @@
+version: 2.1
+executors:
+    bazel:
+        docker:
+            - image: l.gcr.io/google/bazel:latest
+
+jobs:
+    test:
+        executor: bazel
+        steps:
+            - checkout
+            - run:
+                  name: bazel test ...
+                  command: bazel test ...
+workflows:
+    test:
+        jobs:
+            - test
