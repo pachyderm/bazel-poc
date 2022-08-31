@@ -13,15 +13,14 @@ To add:
 -   Go linting (checks from golangci-lint)
 -   Helm (releases)
 -   Jsonnet (lint, tests)
--   Python (PyPI releases, lint, tests)
+-   Python (PyPI releases, lint)
 -   Typescript + React (npm releases, lint, tests)
 -   Docker builds (multiarch)
 -   Kubernetes helpers (build containers, setup minikube, deploy helm chart, upgrade helm chart
     after rebuild, etc.)
--   CI configuration (bazel test ... in circle)
 -   Darwin/Arm64 cc toolcahin
 -   Properly vendor tooling (prettier, kind/minikube, etc.)
--   Buildifier lint / test.
+-   Buildifier lint / test; verifying that gazelle was run.
 
 # How to
 
