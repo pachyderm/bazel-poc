@@ -3,6 +3,7 @@ executors:
     bazel:
         docker:
             - image: cimg/base:2022.08
+        resource_class: xlarge
 
 jobs:
     test:
