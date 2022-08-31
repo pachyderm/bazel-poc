@@ -9,7 +9,7 @@ go_library(
     visibility = ["//visibility:private"],
     deps = [
         "//go/pkg/hello",
-        "//protos",
+        "//protos:hello_go_proto",
         "@com_github_jrockway_opinionated_server//server",
         "@org_golang_google_grpc//:go_default_library",
         "@org_uber_go_zap//:zap",
