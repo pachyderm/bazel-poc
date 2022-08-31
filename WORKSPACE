@@ -65,6 +65,7 @@ filegroup(
   visibility = ["//visibility:public"],
 )
 """,
+    sha256 = "952d66224690314e884f238397f59188cbf45d4daecae021b12120e60d7586ac",
     urls = ["https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/cb4fa34f1faddafb72cace35faf62a611f2ca7c9/debian_bullseye_amd64_sysroot.tar.xz"],
 )
 
@@ -77,6 +78,7 @@ filegroup(
   visibility = ["//visibility:public"],
 )
 """,
+    sha256 = "16e26665723aa85487ec8a6e73933cab6f45195d8426fa5c1af6fc2262abe09a",
     urls = ["https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/f00ece500aef0ff2a431a07de48bd3e1aa6d1caf/debian_bullseye_arm64_sysroot.tar.xz"],
 )
 
@@ -177,6 +179,7 @@ k8s_defaults(
     image_chroot = "localhost:5001/",
 )
 
+# Python
 http_archive(
     name = "rules_python",
     sha256 = "a3a6e99f497be089f81ec082882e40246bfd435f52f4e82f37e89449b04573f6",
@@ -192,9 +195,23 @@ python_register_toolchains(
     python_version = "3.10",
 )
 
-load("@python3_10//:defs.bzl", "interpreter")
+# pip modules
+load("@python3_10//:defs.bzl", python3_10_interpreter = "interpreter")
 load("@rules_python//python:pip.bzl", "pip_parse")
 
-# pip_parse(
-#     python_interpreter_target = interpreter,
-# )
+pip_parse(
+    name = "pip",
+    extra_pip_args = ["-v"],
+    python_interpreter_target = python3_10_interpreter,
+    quiet = False,
+    requirements_lock = "//:requirements_lock.txt",
+)
+
+load("@pip//:requirements.bzl", pip_install_deps = "install_deps")
+
+pip_install_deps()
+
+# python gazelle support
+load("@rules_python//gazelle:deps.bzl", _py_gazelle_deps = "gazelle_deps")
+
+_py_gazelle_deps()

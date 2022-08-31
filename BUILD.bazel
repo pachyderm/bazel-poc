@@ -1,20 +1,3 @@
-# Gazelle
-
-load("@bazel_gazelle//:def.bzl", "gazelle")
-
-# gazelle:prefix github.com/pachyderm/bazel-poc
-gazelle(name = "gazelle")
-
-gazelle(
-    name = "gazelle-update-repos",
-    args = [
-        "-from_file=go.mod",
-        "-to_macro=deps.bzl%go_dependencies",
-        "-prune",
-    ],
-    command = "update-repos",
-)
-
 # Cross-compiling
 
 load("//:platforms.bzl", "register_platforms")
@@ -56,4 +39,65 @@ load("@io_bazel_rules_k8s//k8s:objects.bzl", "k8s_objects")
 k8s_objects(
     name = "local",
     objects = ["//go/cmd/go-echo:deployment"],
+)
+
+# Gazelle for Python and Go
+
+load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
+load("@pip//:requirements.bzl", "all_whl_requirements")
+load("@rules_python//gazelle:def.bzl", "GAZELLE_PYTHON_RUNTIME_DEPS")
+load("@rules_python//gazelle/manifest:defs.bzl", "gazelle_python_manifest")
+load("@rules_python//gazelle/modules_mapping:def.bzl", "modules_mapping")
+
+# This rule fetches the metadata for python packages we depend on. That data is
+# required for the gazelle_python_manifest rule to update our manifest file.
+modules_mapping(
+    name = "modules_map",
+    wheels = all_whl_requirements,
+)
+
+# Gazelle python extension needs a manifest file mapping from
+# an import to the installed package that provides it.
+# This macro produces two targets:
+# - //:gazelle_python_manifest.update can be used with `bazel run`
+#   to recalculate the manifest
+# - //:gazelle_python_manifest.test is a test target ensuring that
+#   the manifest doesn't need to be updated
+gazelle_python_manifest(
+    name = "gazelle_python_manifest",
+    modules_mapping = ":modules_map",
+    pip_repository_incremental = True,
+    pip_repository_name = "pip",
+    requirements = "//:requirements_lock.txt",
+)
+
+gazelle_binary(
+    name = "gazelle_bin",
+    languages = [
+        "@rules_python//gazelle",  # Use gazelle from rules_python.
+        "@bazel_gazelle//language/go",  # Built-in rule from gazelle for Golang.
+        "@bazel_gazelle//language/proto",  # Built-in rule from gazelle for Protos.
+    ],
+)
+
+# The following comments are actual configuration...
+#
+# gazelle:prefix github.com/pachyderm/bazel-poc
+# gazelle:python_library_naming_convention $package_name$_lib
+# gazelle:python_binary_naming_convention $package_name$
+gazelle(
+    name = "gazelle",
+    data = GAZELLE_PYTHON_RUNTIME_DEPS,
+    gazelle = "//:gazelle_bin",
+)
+
+gazelle(
+    name = "gazelle-update-repos",
+    args = [
+        "-from_file=go.mod",
+        "-to_macro=deps.bzl%go_dependencies",
+        "-prune",
+    ],
+    command = "update-repos",
+    gazelle = "//:gazelle_bin",
 )

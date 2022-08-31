@@ -20,6 +20,8 @@ To add:
     after rebuild, etc.)
 -   CI configuration (bazel test ... in circle)
 -   Darwin/Arm64 cc toolcahin
+-   Properly vendor tooling (prettier, kind/minikube, etc.)
+-   Buildifier lint / test.
 
 # How to
 
@@ -63,10 +65,10 @@ file in this directory if you find yourself always running the tests like this.
 bazel run //go/cmd/go-echo
 ```
 
-## Generate BUILD.bazel files for new Go code
+## Generate BUILD.bazel files for new Go / proto / Python code
 
 ```shell
-bazel run //:gazelle
+bazel run gazelle
 ```
 
 If you're creating a new package or file, you probably want to just make a minimal go file:
@@ -82,7 +84,7 @@ you're editing.
 
 ```shell
 go get github.com/somebody/some-library@latest
-bazel run //:gazelle-update-repos
+bazel run gazelle-update-repos
 ```
 
 Do note that things like `go mod tidy` don't work anymore; `go mod` doesn't know about
