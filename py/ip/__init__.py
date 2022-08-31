@@ -1,5 +1,5 @@
 import requests
 
-def main():
+def get_ip():
     r = requests.get("https://ifconfig.net/", headers={"accept": "text/plain"})
-    print(r.text)
+    return r.text

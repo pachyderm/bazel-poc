@@ -1,4 +1,4 @@
-load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+load("@rules_python//python:defs.bzl", "py_binary", "py_library", "py_test")
 
 py_library(
     name = "ip_lib",
@@ -14,5 +14,13 @@ py_binary(
     imports = ["../.."],
     main = "__main__.py",
     visibility = ["//:__subpackages__"],
+    deps = [":ip_lib"],
+)
+
+py_test(
+    name = "ip_test",
+    srcs = ["__test__.py"],
+    imports = ["../.."],
+    main = "__test__.py",
     deps = [":ip_lib"],
 )

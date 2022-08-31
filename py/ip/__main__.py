@@ -1,3 +1,3 @@
-from __init__ import main
+from __init__ import get_ip
 if __name__ == '__main__':
-    main()
+    print(get_ip())
